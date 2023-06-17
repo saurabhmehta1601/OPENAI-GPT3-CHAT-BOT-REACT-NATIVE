@@ -7,8 +7,10 @@ export default function App() {
   const [input, setInput] = useState("");
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={{ color: "white" }} className="text-3xl bg-yellow-400">
-        expo!
+      <Text
+        className={"text-3xl text-gray-50"}
+      >
+        RN is cool!
       </Text>
       <StatusBar style="auto" />
     </SafeAreaView>
