@@ -14,7 +14,9 @@
     "nativewind": "^2.0.11",
     "react": "18.2.0",
     "react-native": "0.71.8",
-    "react-native-safe-area-context": "4.5.0"
+    "react-native-safe-area-context": "4.5.0",
+    "react-native-skeleton-placeholder": "^5.2.4",
+    "usehooks-ts": "^2.9.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
