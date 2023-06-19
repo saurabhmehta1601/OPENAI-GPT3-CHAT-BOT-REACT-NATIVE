@@ -5,7 +5,12 @@ import PropTypes from "prop-types";
 
 const PromptSubmitForm = (props) => {
   return (
-    <View className="flex flex-row p-2 bg-white rounded-sm w-full ring">
+    <View
+      className={[
+        "flex flex-row p-2 bg-white rounded-sm w-full ring",
+        props.className ?? "",
+      ].join(" ")}
+    >
       <TextInput
         value={props.prompt}
         onChangeText={props.onChangePromptText}
@@ -27,4 +32,5 @@ PromptSubmitForm.propTypes = {
   prompt: PropTypes.string.isRequired,
   onChangePromptText: PropTypes.func.isRequired,
   onPromptSubmit: PropTypes.func.isRequired,
+  className: PropTypes.string,
 };

@@ -32,7 +32,12 @@ const Message = (props) => {
   );
 
   return (
-    <View className="flex flex-row justify-center items-center gap-x-2 px-2 py-1 rounded-md">
+    <View
+      className={[
+        "flex flex-row gap-x-2 px-2 py-1 rounded-md",
+        props.className ?? "",
+      ].join(" ")}
+    >
       <Image
         source={
           props.sender === "bot"
@@ -64,11 +69,13 @@ export default Message;
 
 Message.propTypes = {
   text: PropTypes.string.isRequired,
-  sender: PropTypes.oneOf(["bot", "user"]),
-  loading: PropTypes.bool,
+  sender: PropTypes.oneOf(["bot", "user"]).isRequired,
+  loading: PropTypes.bool.isRequired,
+  className: PropTypes.string,
 };
 
 Message.defaultProps = {
   sender: "user",
   loading: false,
+  className: "",
 };
