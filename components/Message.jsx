@@ -1,4 +1,4 @@
-import { Text, View, Image, StyleSheet, ActivityIndicator } from "react-native";
+import { Text, View, Image, ActivityIndicator } from "react-native";
 import React, { useState } from "react";
 import { useInterval } from "usehooks-ts";
 import PropTypes from "prop-types";
@@ -72,10 +72,3 @@ Message.defaultProps = {
   sender: "user",
   loading: false,
 };
-
-const styles = StyleSheet.create({
-  lottie: {
-    width: 100,
-    height: 100,
-  },
-});
