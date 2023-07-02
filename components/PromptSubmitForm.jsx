@@ -1,26 +1,25 @@
 import { TouchableWithoutFeedback, View, Image } from "react-native";
 import { TextInput } from "react-native";
-import sendMessageIcon from "../assets/icon-send-message.png";
+import FeatherIcon from "react-native-vector-icons/Feather";
 import PropTypes from "prop-types";
 
 const PromptSubmitForm = (props) => {
   return (
     <View
       className={[
-        "flex flex-row p-2 bg-white rounded-sm w-full ring",
+        "flex flex-row p-2 w-full ring border-2 mx-2 border-black  rounded-md ",
         props.className ?? "",
       ].join(" ")}
     >
       <TextInput
         value={props.prompt}
         onChangeText={props.onChangePromptText}
-        className="flex-1 rounded-md "
+        className="flex-1 text-xl"
       />
-      <TouchableWithoutFeedback
-        className="p-2 cursor-pointer"
-        onPress={props.onPromptSubmit}
-      >
-        <Image source={sendMessageIcon} className={"w-8 h-8"} />
+      <TouchableWithoutFeedback onPress={props.onPromptSubmit}>
+        <View className={"cursor-pointer mr-2"}>
+          <FeatherIcon name="send" size={30} color="blue" />
+        </View>
       </TouchableWithoutFeedback>
     </View>
   );
@@ -29,6 +28,7 @@ const PromptSubmitForm = (props) => {
 export default PromptSubmitForm;
 
 PromptSubmitForm.propTypes = {
+  disabled: PropTypes.bool.isRequired,
   prompt: PropTypes.string.isRequired,
   onChangePromptText: PropTypes.func.isRequired,
   onPromptSubmit: PropTypes.func.isRequired,

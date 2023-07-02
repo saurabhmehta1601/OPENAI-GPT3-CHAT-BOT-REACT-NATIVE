@@ -1,6 +1,13 @@
-import { View, Text, Image, TouchableOpacity, Linking } from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Linking,
+} from "react-native";
 import React from "react";
-import githubIcon from "../assets/github.png";
 
 const Header = (props) => {
   const openGithubRepository = () => {
@@ -9,12 +16,10 @@ const Header = (props) => {
 
   return (
     <View className="p-4 flex flex-row justify-between " {...props}>
-      <Text className="text-3xl text-white hover:cursor-pointer">AI BUDDY</Text>
-      <View className="hover:cursor-pointer hover:ring active:ring  rounded-full bg-white">
-        <TouchableOpacity onPress={openGithubRepository}>
-          <Image source={githubIcon} alt="github" />
-        </TouchableOpacity>
-      </View>
+      <Text className="text-3xl hover:cursor-pointer">AI BUDDY</Text>
+      <TouchableOpacity onPress={openGithubRepository}>
+        <Icon name="github-square" size={40} color="#000" />
+      </TouchableOpacity>
     </View>
   );
 };

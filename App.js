@@ -8,7 +8,7 @@ import { FlatList } from "react-native";
 import axios from "axios";
 import generateRandomID from "./utils/getRadomID";
 
-const SERVER_URL = "https://if0b8vdgxc.execute-api.us-east-1.amazonaws.com/v1";
+const SERVER_URL = "https://chat-buddy-express-api-7cnof6acma-el.a.run.app";
 
 const greetingMessage = {
   id: generateRandomID(),
@@ -34,16 +34,16 @@ export default function App() {
 
     // Send the prompt to the server and get the response and add it to the messages
     try {
-      const response = await axios.post(`${SERVER_URL}/get-autocomplete`, {
+      const response = await axios.post(`${SERVER_URL}/autocomplete`, {
         prompt,
       });
       console.log({ response });
-      const { id, autoComplete } = response.data;
+      const { id, text } = response.data;
       setMessages([
         ...messages.filter((msg) => msg.loading === false),
         {
           id,
-          text: autoComplete,
+          text: text,
           sender: "bot",
           loading: false,
         },
@@ -63,7 +63,7 @@ export default function App() {
   };
 
   return (
-    <SafeAreaView className="bg-slate-800" style={styles.container}>
+    <SafeAreaView className="bg-white" style={styles.container}>
       <Header />
       <FlatList
         data={messages}
@@ -72,7 +72,7 @@ export default function App() {
             <Message
               text={item.text}
               sender={item.sender}
-              loading={item.loading ?? false}
+              loading={item.loading}
             />
           </View>
         )}
@@ -81,6 +81,7 @@ export default function App() {
 
       <View className="mt-auto">
         <PromptSubmitForm
+          disabled={Boolean(prompt.trim())}
           prompt={prompt}
           onPromptSubmit={handlePromptSubmission}
           onChangePromptText={(text) => setPrompt(text)}
