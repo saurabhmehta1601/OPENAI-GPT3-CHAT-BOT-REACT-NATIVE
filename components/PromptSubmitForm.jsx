@@ -7,7 +7,7 @@ const PromptSubmitForm = (props) => {
   return (
     <View
       className={[
-        "flex flex-row mx-2 p-2 ring border-2  border-black  rounded-md ",
+        "flex flex-row mx-2 mb-2 p-2 ring border-2  border-black  rounded-md ",
         props.className ?? "",
       ].join(" ")}
     >

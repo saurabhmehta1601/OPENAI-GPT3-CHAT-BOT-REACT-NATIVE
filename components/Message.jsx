@@ -47,21 +47,13 @@ const Message = (props) => {
       ) : (
         <Ionicons name="person" size={40} color="#000" />
       )}
-      {/* <Image
-        source={
-          props.sender === "bot"
-            ? require("../assets/bot.png")
-            : require("../assets/user.png")
-        }
-        className="w-10 h-10"
-      /> */}
       <View className={" rounded-sm flex-1 "}>
         {props.loading ? (
           <ActivityIndicator size="large" color="#fff" />
         ) : (
           <Text
             className={
-              "text-lg py-2 px-3 rounded-md font-bold bg-slate-700 text-gray-200"
+              "text-lg py-2 px-3 rounded-md font-bold bg-black text-white"
             }
           >
             {props.text &&
