@@ -20,13 +20,13 @@ const Message = (props) => {
 
   useInterval(
     () => {
-      if (cursor >= props.text.length) {
+      if (!props.text || cursor >= props.text.length) {
         return;
       }
       setRenderedText((text) => text + props.text[cursor]);
       setCursor((cursor) => cursor + 1);
     },
-    cursor >= props.text.length || props.loading || props.sender !== "bot"
+    props.text && cursor >= props.text.length || props.loading || props.sender !== "bot"
       ? null
       : 40
   );
@@ -55,9 +55,10 @@ const Message = (props) => {
               "text-lg py-2 px-3 rounded-md font-bold bg-slate-700 text-gray-200"
             }
           >
-            {props.sender === "bot"
-              ? renderedText
-              : formatTextWithPreLine(props.text)}
+            {props.text &&
+              (props.sender === "bot"
+                ? renderedText
+                : formatTextWithPreLine(props.text))}
           </Text>
         )}
       </View>
@@ -68,13 +69,14 @@ const Message = (props) => {
 export default Message;
 
 Message.propTypes = {
-  text: PropTypes.string.isRequired,
+  text: PropTypes.string,
   sender: PropTypes.oneOf(["bot", "user"]).isRequired,
-  loading: PropTypes.bool.isRequired,
+  loading: PropTypes.bool,
   className: PropTypes.string,
 };
 
 Message.defaultProps = {
+  text: '',
   sender: "user",
   loading: false,
   className: "",

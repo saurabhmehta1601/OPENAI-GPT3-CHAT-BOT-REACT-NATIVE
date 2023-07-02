@@ -4,37 +4,64 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "./components/Header";
 import Message from "./components/Message";
 import PromptSubmitForm from "./components/PromptSubmitForm";
-import { Alert } from "react-native";
 import { FlatList } from "react-native";
+import axios from "axios";
+import generateRandomID from "./utils/getRadomID";
+
+const SERVER_URL = "https://if0b8vdgxc.execute-api.us-east-1.amazonaws.com/v1";
+
+const greetingMessage = {
+  id: generateRandomID(),
+  text: "Hello, How can I help you?",
+  sender: "bot",
+  loading: false,
+};
 
 export default function App() {
   const [prompt, setPrompt] = useState("");
-  const [messages, setMessages] = useState([
-    { id: 1, text: "How how are you", sender: "user" },
-    { id: 2, text: "I am fine", sender: "bot" },
-    { id: 3, text: "What about you", sender: "user" },
-    {
-      id: 4,
-      text: "How is life going. What can I sau this is goog but ofsdfsodf fmfekmfkm wekrw lrm weklrwkemrm klwrk werkmlw emkr",
-      sender: "bot",
-    },
-    { id: 5, text: "How is life going", sender: "bot" },
-    { id: 6, text: "How is life going", sender: "bot" },
-    { id: 7, text: "How is life going", sender: "bot" },
-    { id: 8, text: "How is life going", sender: "bot" },
-    { id: 9, text: "How is life going", sender: "bot" },
-    { id: 10, text: "How is life going", sender: "bot" },
-    { id: 11, text: "How is life going", sender: "bot" },
-    { id: 12, text: "How is life going", sender: "bot" },
-    { id: 435, text: "How is life going", sender: "bot" },
-    { id: 26, text: "How is life going", sender: "bot" },
-    { id: 2357, text: "How is life going", sender: "bot" },
-    { id: 85, text: "How is life going", sender: "bot" },
-    { id: 923, text: "How is life going", sender: "bot" },
-    { id: 14560, text: "How is life going", sender: "bot" },
-    { id: 1251, text: "How is life going", sender: "bot" },
-    { id: 16572, text: "How is life going", sender: "bot" },
-  ]);
+  const [messages, setMessages] = useState([greetingMessage]);
+
+  const handlePromptSubmission = async () => {
+    if (prompt.trim() === "") return;
+
+    // Add the prompt to the messages
+    setMessages([
+      ...messages,
+      { id: generateRandomID(), text: prompt, sender: "user", loading: false },
+      { id: generateRandomID(), loading: true, sender: "bot" },
+    ]);
+    setPrompt("");
+
+    // Send the prompt to the server and get the response and add it to the messages
+    try {
+      const response = await axios.post(`${SERVER_URL}/get-autocomplete`, {
+        prompt,
+      });
+      console.log({ response });
+      const { id, autoComplete } = response.data;
+      setMessages([
+        ...messages.filter((msg) => msg.loading === false),
+        {
+          id,
+          text: autoComplete,
+          sender: "bot",
+          loading: false,
+        },
+      ]);
+    } catch (error) {
+      console.log({ error });
+      setMessages([
+        ...messages.filter((msg) => msg.loading === false),
+        {
+          id: generateRandomID(),
+          text: "Sorry, I didn't get that",
+          sender: "bot",
+          loading: false,
+        },
+      ]);
+    }
+  };
+
   return (
     <SafeAreaView className="bg-slate-800" style={styles.container}>
       <Header />
@@ -42,7 +69,11 @@ export default function App() {
         data={messages}
         renderItem={({ item }) => (
           <View className={"my-1"}>
-            <Message text={item.text} sender={item.sender} />
+            <Message
+              text={item.text}
+              sender={item.sender}
+              loading={item.loading ?? false}
+            />
           </View>
         )}
         keyExtractor={(item) => item.id}
@@ -51,9 +82,7 @@ export default function App() {
       <View className="mt-auto">
         <PromptSubmitForm
           prompt={prompt}
-          onPromptSubmit={() => {
-            Alert.alert("Prompt Submitted");
-          }}
+          onPromptSubmit={handlePromptSubmission}
           onChangePromptText={(text) => setPrompt(text)}
         />
       </View>
