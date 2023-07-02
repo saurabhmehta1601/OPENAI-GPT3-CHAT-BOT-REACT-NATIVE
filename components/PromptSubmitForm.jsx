@@ -7,7 +7,7 @@ const PromptSubmitForm = (props) => {
   return (
     <View
       className={[
-        "flex flex-row p-2 w-full ring border-2 mx-2 border-black  rounded-md ",
+        "flex flex-row mx-2 p-2 ring border-2  border-black  rounded-md ",
         props.className ?? "",
       ].join(" ")}
     >
@@ -17,8 +17,8 @@ const PromptSubmitForm = (props) => {
         className="flex-1 text-xl"
       />
       <TouchableWithoutFeedback onPress={props.onPromptSubmit}>
-        <View className={"cursor-pointer mr-2"}>
-          <FeatherIcon name="send" size={30} color="blue" />
+        <View className={"cursor-pointer "}>
+          <FeatherIcon name="send" size={30} color="#000" />
         </View>
       </TouchableWithoutFeedback>
     </View>
