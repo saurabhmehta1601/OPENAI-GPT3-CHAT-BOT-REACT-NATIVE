@@ -8,7 +8,7 @@ const ChatMessageSection = ({ messages }) => {
     <FlatList
       data={messages}
       renderItem={({ item }) => (
-        <View className={"my-1"}>
+        <View className={"my-2"}>
           <Message
             text={item.text}
             sender={item.sender}

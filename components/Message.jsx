@@ -17,6 +17,7 @@ function formatTextWithPreLine(text) {
 }
 
 const Message = (props) => {
+  console.log({ props });
   const [renderedText, setRenderedText] = useState("");
   const [cursor, setCursor] = useState(0);
 
@@ -38,22 +39,27 @@ const Message = (props) => {
   return (
     <View
       className={[
-        "flex flex-row items-end gap-x-2 px-2 py-1 rounded-md ",
+        "flex flex-row items-start gap-x-2 px-2 py-1 rounded-md ",
         props.className ?? "",
       ].join(" ")}
     >
-      {props.sender === "bot" ? (
-        <FontAwesome5 name="robot" size={40} color="#000" />
-      ) : (
-        <Ionicons name="person" size={40} color="#000" />
-      )}
-      <View className={" rounded-sm flex-1 "}>
-        {props.loading ? (
-          <ActivityIndicator size="large" color="#fff" />
+      {/* AVATAR of Message Sender */}
+      <View className="bg-black rounded-md p-1">
+        {props.sender === "bot" ? (
+          <FontAwesome5 name="robot" size={29} color="#fff" />
         ) : (
-          <Text
-            className={"font-semibold py-2 px-3 rounded-md bg-black text-white"}
-          >
+          <Ionicons name="person" size={29} color="#fff" />
+        )}
+      </View>
+
+      {/* Text Message */}
+      <View className={"flex-1 border-2 border-black bg-[#eee] rounded-md"}>
+        {props.loading ? (
+          <View className="rounded-md p-2">
+            <ActivityIndicator color="#000" />
+          </View>
+        ) : (
+          <Text className={"font-semibold py-2 px-3 rounded-md "}>
             {props.text &&
               (props.sender === "bot"
                 ? renderedText
