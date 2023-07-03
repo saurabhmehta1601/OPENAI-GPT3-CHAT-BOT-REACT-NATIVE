@@ -7,13 +7,14 @@ import PromptSubmitForm from "./components/PromptSubmitForm";
 import { FlatList } from "react-native";
 import axios from "axios";
 import generateRandomID from "./utils/getRadomID";
+import { sender } from "./constants";
 
 const SERVER_URL = "https://chat-buddy-express-api-7cnof6acma-el.a.run.app";
 
 const greetingMessage = {
   id: generateRandomID(),
   text: "Hello, How can I help you?",
-  sender: "bot",
+  sender: sender.BOT,
   loading: false,
 };
 
@@ -21,43 +22,63 @@ export default function App() {
   const [prompt, setPrompt] = useState("");
   const [messages, setMessages] = useState([greetingMessage]);
 
+  console.log({ messages });
+
   const handlePromptSubmission = async () => {
     if (prompt.trim() === "") return;
 
-    // Add the prompt to the messages
-    setMessages([
-      ...messages,
-      { id: generateRandomID(), text: prompt, sender: "user", loading: false },
-      { id: generateRandomID(), loading: true, sender: "bot" },
-    ]);
+    // Add the user entered prompt to the messages
+    const userPromptMessage = {
+      id: generateRandomID(),
+      text: prompt,
+      sender: sender.USER,
+      loading: false,
+    };
+    setMessages([...messages, userPromptMessage]);
+
     setPrompt("");
+
+    // Add a message to show autocompletion loading by bot
+    const loadingAutocompletionMessage = {
+      id: generateRandomID(),
+      loading: true,
+      sender: sender.BOT,
+    };
+    setMessages([...messages, loadingAutocompletionMessage]);
 
     // Send the prompt to the server and get the response and add it to the messages
     try {
       const response = await axios.post(`${SERVER_URL}/autocomplete`, {
         prompt,
       });
-      console.log({ response });
       const { id, text } = response.data;
+
+      const autocompletionResponseMessage = {
+        id,
+        text: text.trim(),
+        sender: sender.BOT,
+        loading: false,
+      };
+
+      // Remove autocompletion loading message and add the autocompetion message from response from backend
       setMessages([
-        ...messages.filter((msg) => msg.loading === false),
-        {
-          id,
-          text: text.trim(),
-          sender: "bot",
-          loading: false,
-        },
+        ...messages.filter((msg) => msg.id !== loadingAutocompletionMessage.id),
+        autocompletionResponseMessage,
       ]);
     } catch (error) {
       console.log({ error });
+
+      const errorLoadingAutocompletionMessage = {
+        id: generateRandomID(),
+        text: "Sorry, I didn't get that",
+        sender: sender.BOT,
+        loading: false,
+      };
+
+      // Remove autocompletion loading message and add error message
       setMessages([
-        ...messages.filter((msg) => msg.loading === false),
-        {
-          id: generateRandomID(),
-          text: "Sorry, I didn't get that",
-          sender: "bot",
-          loading: false,
-        },
+        ...messages.filter((msg) => msg.id !== loadingAutocompletionMessage.id),
+        errorLoadingAutocompletionMessage,
       ]);
     }
   };

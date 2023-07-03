@@ -4,6 +4,7 @@ import { useInterval } from "usehooks-ts";
 import PropTypes from "prop-types";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { sender } from "../constants";
 
 function formatTextWithPreLine(text) {
   const lines = text.trim().split("\n");
@@ -31,7 +32,7 @@ const Message = (props) => {
     },
     (props.text && cursor >= props.text.length) ||
       props.loading ||
-      props.sender !== "bot"
+      props.sender !== sender.BOT 
       ? null
       : 40
   );
@@ -45,7 +46,7 @@ const Message = (props) => {
     >
       {/* AVATAR of Message Sender */}
       <View className="bg-black rounded-md p-1">
-        {props.sender === "bot" ? (
+        {props.sender === sender.BOT ? (
           <FontAwesome5 name="robot" size={29} color="#fff" />
         ) : (
           <Ionicons name="person" size={29} color="#fff" />
@@ -61,7 +62,7 @@ const Message = (props) => {
         ) : (
           <Text className={"font-semibold py-2 px-3 rounded-md "}>
             {props.text &&
-              (props.sender === "bot"
+              (props.sender === sender.BOT
                 ? renderedText
                 : formatTextWithPreLine(props.text))}
           </Text>
@@ -75,14 +76,14 @@ export default Message;
 
 Message.propTypes = {
   text: PropTypes.string,
-  sender: PropTypes.oneOf(["bot", "user"]).isRequired,
+  sender: PropTypes.oneOf([sender.BOT, sender.USER]).isRequired,
   loading: PropTypes.bool,
   className: PropTypes.string,
 };
 
 Message.defaultProps = {
   text: "",
-  sender: "user",
+  sender: sender.USER,
   loading: false,
   className: "",
 };
