@@ -11,7 +11,11 @@ function formatTextWithPreLine(text) {
 
   const formattedLines = lines.map((line, index) => {
     const formattedLine = line.replace(/ +/g, " ");
-    return <Text key={index}>{formattedLine}</Text>;
+    return (
+      <Text key={index} className="font-[Nunito]">
+        {formattedLine}
+      </Text>
+    );
   });
 
   return formattedLines;
@@ -32,7 +36,7 @@ const Message = (props) => {
     },
     (props.text && cursor >= props.text.length) ||
       props.loading ||
-      props.sender !== sender.BOT 
+      props.sender !== sender.BOT
       ? null
       : 40
   );
@@ -60,7 +64,11 @@ const Message = (props) => {
             <ActivityIndicator color="#000" />
           </View>
         ) : (
-          <Text className={"font-semibold py-2 px-3 rounded-md "}>
+          <Text
+            className={
+              "py-2 px-3 rounded-md font-[Nunito] font-bold"
+            }
+          >
             {props.text &&
               (props.sender === sender.BOT
                 ? renderedText

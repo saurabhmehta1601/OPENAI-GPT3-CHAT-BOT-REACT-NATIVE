@@ -12,9 +12,10 @@ const PromptSubmitForm = (props) => {
       ].join(" ")}
     >
       <TextInput
+        placeholder="Ask me anything"
         value={props.prompt}
         onChangeText={props.onChangePromptText}
-        className="flex-1 text-xl"
+        className="flex-1 text-xl text-[Nunito]"
       />
       <TouchableWithoutFeedback onPress={props.onPromptSubmit}>
         <View className={"cursor-pointer ml-2"}>

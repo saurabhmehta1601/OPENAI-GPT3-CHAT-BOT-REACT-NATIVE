@@ -1,5 +1,5 @@
 import { View, StyleSheet } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "./components/Header";
 import Message from "./components/Message";
@@ -8,6 +8,14 @@ import { FlatList } from "react-native";
 import axios from "axios";
 import generateRandomID from "./utils/getRadomID";
 import { sender } from "./constants";
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+
+SplashScreen.preventAutoHideAsync();
+
+const customFonts = {
+  Nunito: require("./assets/fonts/Nunito.ttf"),
+};
 
 const SERVER_URL = "https://chat-buddy-express-api-7cnof6acma-el.a.run.app";
 
@@ -19,10 +27,23 @@ const greetingMessage = {
 };
 
 export default function App() {
+  // Load fonts and return null while fonts are loaded
+
   const [prompt, setPrompt] = useState("");
   const [messages, setMessages] = useState([greetingMessage]);
 
   console.log({ messages });
+
+  const [areFontsLoading] = useFonts(customFonts);
+  const onLayoutRootView = useCallback(async () => {
+    if (areFontsLoading) {
+      await SplashScreen.hideAsync();
+    }
+  }, [areFontsLoading]);
+
+  if (!areFontsLoading) {
+    return null;
+  }
 
   const handlePromptSubmission = async () => {
     if (prompt.trim() === "") return;
@@ -84,7 +105,11 @@ export default function App() {
   };
 
   return (
-    <SafeAreaView className="bg-white" style={styles.container}>
+    <SafeAreaView
+      className="bg-white"
+      style={styles.container}
+      onLayout={onLayoutRootView}
+    >
       <Header />
       <FlatList
         data={messages}
