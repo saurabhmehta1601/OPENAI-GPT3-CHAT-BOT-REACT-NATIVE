@@ -1,4 +1,4 @@
-import { Text, View, Image, ActivityIndicator } from "react-native";
+import { Text, View, ActivityIndicator } from "react-native";
 import React, { useState } from "react";
 import { useInterval } from "usehooks-ts";
 import PropTypes from "prop-types";
@@ -38,7 +38,7 @@ const Message = (props) => {
   return (
     <View
       className={[
-        "flex flex-row gap-x-2 px-2 py-1 rounded-md justify-center",
+        "flex flex-row items-end gap-x-2 px-2 py-1 rounded-md ",
         props.className ?? "",
       ].join(" ")}
     >
@@ -52,9 +52,7 @@ const Message = (props) => {
           <ActivityIndicator size="large" color="#fff" />
         ) : (
           <Text
-            className={
-              "text-lg py-2 px-3 rounded-md font-bold bg-black text-white"
-            }
+            className={"font-semibold py-2 px-3 rounded-md bg-black text-white"}
           >
             {props.text &&
               (props.sender === "bot"
