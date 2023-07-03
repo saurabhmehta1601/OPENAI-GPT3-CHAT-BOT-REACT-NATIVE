@@ -43,7 +43,7 @@ export default function App() {
         ...messages.filter((msg) => msg.loading === false),
         {
           id,
-          text: text,
+          text: text.trim(),
           sender: "bot",
           loading: false,
         },

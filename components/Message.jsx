@@ -6,7 +6,7 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 function formatTextWithPreLine(text) {
-  const lines = text.split("\n");
+  const lines = text.trim().split("\n");
 
   const formattedLines = lines.map((line, index) => {
     const formattedLine = line.replace(/ +/g, " ");

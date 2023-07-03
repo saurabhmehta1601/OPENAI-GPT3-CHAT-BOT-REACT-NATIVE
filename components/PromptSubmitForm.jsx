@@ -17,7 +17,7 @@ const PromptSubmitForm = (props) => {
         className="flex-1 text-xl"
       />
       <TouchableWithoutFeedback onPress={props.onPromptSubmit}>
-        <View className={"cursor-pointer "}>
+        <View className={"cursor-pointer ml-2"}>
           <FeatherIcon name="send" size={30} color="#000" />
         </View>
       </TouchableWithoutFeedback>
