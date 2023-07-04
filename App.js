@@ -10,6 +10,8 @@ import generateRandomID from "./utils/getRadomID";
 import { sender } from "./constants";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import { store } from "./redux/store";
+import { Provider } from "react-redux";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -105,35 +107,37 @@ export default function App() {
   };
 
   return (
-    <SafeAreaView
-      className="bg-white"
-      style={styles.container}
-      onLayout={onLayoutRootView}
-    >
-      <Header />
-      <FlatList
-        data={messages}
-        renderItem={({ item }) => (
-          <View className={"my-1"}>
-            <Message
-              text={item.text}
-              sender={item.sender}
-              loading={item.loading}
-            />
-          </View>
-        )}
-        keyExtractor={(item) => item.id}
-      />
-
-      <View className="mt-auto">
-        <PromptSubmitForm
-          disabled={Boolean(prompt.trim())}
-          prompt={prompt}
-          onPromptSubmit={handlePromptSubmission}
-          onChangePromptText={(text) => setPrompt(text)}
+    <Provider store={store}>
+      <SafeAreaView
+        className="bg-white"
+        style={styles.container}
+        onLayout={onLayoutRootView}
+      >
+        <Header />
+        <FlatList
+          data={messages}
+          renderItem={({ item }) => (
+            <View className={"my-1"}>
+              <Message
+                text={item.text}
+                sender={item.sender}
+                loading={item.loading}
+              />
+            </View>
+          )}
+          keyExtractor={(item) => item.id}
         />
-      </View>
-    </SafeAreaView>
+
+        <View className="mt-auto">
+          <PromptSubmitForm
+            disabled={Boolean(prompt.trim())}
+            prompt={prompt}
+            onPromptSubmit={handlePromptSubmission}
+            onChangePromptText={(text) => setPrompt(text)}
+          />
+        </View>
+      </SafeAreaView>
+    </Provider>
   );
 }
 
