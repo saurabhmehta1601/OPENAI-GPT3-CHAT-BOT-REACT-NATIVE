@@ -8,12 +8,12 @@ const promptSlice = createSlice({
   name: "prompt",
   initialState,
   reducers: {
-    setText: (state, action) => {
+    setPromptText: (state, action) => {
       state.text = action.payload;
     },
   },
 });
 
-export const { setText } = promptSlice.actions;
+export const { setPromptText } = promptSlice.actions;
 
 export default promptSlice.reducer;

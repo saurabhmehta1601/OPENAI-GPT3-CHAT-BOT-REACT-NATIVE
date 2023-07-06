@@ -25,7 +25,7 @@
       "package": "com.saurabhmehta.ChatGPT_RN"
     },
     "web": {
-      "favicon": "./assets/logo.png"
+      "favicon": "./assets/icon.png"
     },
     "extra": {
       "eas": {
