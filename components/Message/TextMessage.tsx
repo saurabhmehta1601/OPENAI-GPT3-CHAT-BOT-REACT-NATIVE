@@ -2,7 +2,7 @@ import { Text, View } from "react-native"
 import React, { useState } from "react";
 import { useInterval } from "usehooks-ts";
 import { MESSAGE_SENDER } from "../../constants";
-import Avatar from "./Avatar";
+import Avatar from "../Avatar";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import Ionicons from "react-native-vector-icons/Ionicons"
 import formatTextWithPreLine from "../../utils/formatTextWithPreLines";
