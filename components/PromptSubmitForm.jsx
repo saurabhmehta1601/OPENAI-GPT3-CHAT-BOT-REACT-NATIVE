@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setPromptText } from "../redux/features/promptSlice";
 import axios from "axios";
 import generateRandomID from "../utils/getRadomID";
-import { sender } from "../constants";
+import { MESSAGE_SENDER } from "../constants";
 import { setLoadingNewMessage } from "../redux/features/messagesSlice";
 
 const PromptSubmitForm = (props) => {
@@ -24,7 +24,7 @@ const PromptSubmitForm = (props) => {
     const userPromptMessage = {
       id: generateRandomID(),
       text: prompt,
-      sender: sender.USER,
+      sender: MESSAGE_SENDER.USER,
       loading: false,
     };
     setMessages([...messages, userPromptMessage]);
@@ -35,7 +35,7 @@ const PromptSubmitForm = (props) => {
     const loadingAutocompletionMessage = {
       id: generateRandomID(),
       loading: true,
-      sender: sender.BOT,
+      sender: MESSAGE_SENDER.BOT,
     };
 
     setMessages([...messages, loadingAutocompletionMessage]);
@@ -50,7 +50,7 @@ const PromptSubmitForm = (props) => {
       const autocompletionResponseMessage = {
         id,
         text: text.trim(),
-        sender: sender.BOT,
+        sender: MESSAGE_SENDER.BOT,
         loading: false,
       };
 
@@ -65,7 +65,7 @@ const PromptSubmitForm = (props) => {
       const errorLoadingAutocompletionMessage = {
         id: generateRandomID(),
         text: "Sorry, I didn't get that",
-        sender: sender.BOT,
+        sender: MESSAGE_SENDER.BOT,
         loading: false,
       };
 

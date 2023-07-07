@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import generateRandomID from "../../utils/getRadomID";
-import { sender } from "../../constants";
+import { MESSAGE_TYPE, sender } from "../../constants";
 
 const greetingMessage = {
   id: generateRandomID(),
   text: "Hello, How can I help you?",
   sender: sender.BOT,
-  loading: false,
+  type: MESSAGE_TYPE.TEXT,
 };
 
 const initialState = {

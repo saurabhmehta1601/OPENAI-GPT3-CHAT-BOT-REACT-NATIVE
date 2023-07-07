@@ -1,9 +1,16 @@
 import { View, StyleSheet } from "react-native";
 
-export default function Avatar({ IconPack, name, size, color }) {
+interface IProps {
+  IconPack: any,
+  name: string
+  size?: number
+  color?: string
+}
+
+export default function Avatar({ IconPack, name, size = 25, color = "#fff" }: IProps) {
   return (
     <View style={styles.container}>
-      <IconPack name={name} size={size ?? 25} color={color ?? "#fff"} />
+      <IconPack name={name} size={size} color={color} />
     </View>
   );
 }
