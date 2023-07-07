@@ -1,19 +1,17 @@
-import { TouchableWithoutFeedback, View, Image } from "react-native";
+import { StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import { TextInput } from "react-native";
 import FeatherIcon from "react-native-vector-icons/Feather";
-import { useDispatch, useSelector } from "react-redux";
 import { setPromptText } from "../redux/features/promptSlice";
 import axios from "axios";
 import generateRandomID from "../utils/getRadomID";
 import { MESSAGE_SENDER } from "../constants";
-import { setLoadingNewMessage } from "../redux/features/messagesSlice";
+import { addNewMessage, setLoadingNewMessage } from "../redux/features/messagesSlice";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
 
 const PromptSubmitForm = (props) => {
-  const prompt = useSelector((state) => state.prompt.text);
-
-  const dispatch = useDispatch();
-
-  console.log({ prompt });
+  const prompt = useAppSelector((state) => state.prompt.text);
+  const messages = useAppSelector(state => state.messages.allMessages)
+  const dispatch = useAppDispatch();
 
   const handlePromptSubmission = async () => {
     if (prompt.trim() === "") return;
@@ -27,22 +25,16 @@ const PromptSubmitForm = (props) => {
       sender: MESSAGE_SENDER.USER,
       loading: false,
     };
-    setMessages([...messages, userPromptMessage]);
+    dispatch(addNewMessage(userPromptMessage));
 
     dispatch(setPromptText(""));
 
     // Add a message to show autocompletion loading by bot
-    const loadingAutocompletionMessage = {
-      id: generateRandomID(),
-      loading: true,
-      sender: MESSAGE_SENDER.BOT,
-    };
-
-    setMessages([...messages, loadingAutocompletionMessage]);
+    dispatch(setLoadingNewMessage(true))
 
     // Send the prompt to the server and get the response and add it to the messages
     try {
-      const response = await axios.post(`${SERVER_URL}/autocomplete`, {
+      const response = await axios.post(`${process.env.EXPO_PUBLIC_SERVER_URL}/autocomplete`, {
         prompt,
       });
       const { id, text } = response.data;
@@ -51,48 +43,36 @@ const PromptSubmitForm = (props) => {
         id,
         text: text.trim(),
         sender: MESSAGE_SENDER.BOT,
-        loading: false,
       };
 
-      // Remove autocompletion loading message and add the autocompetion message from response from backend
-      setMessages([
-        ...messages.filter((msg) => msg.id !== loadingAutocompletionMessage.id),
-        autocompletionResponseMessage,
-      ]);
-    } catch (error) {
-      console.log({ error });
-
+      dispatch(addNewMessage(autocompletionResponseMessage))
+    }
+    catch (error) {
       const errorLoadingAutocompletionMessage = {
         id: generateRandomID(),
         text: "Sorry, I didn't get that",
         sender: MESSAGE_SENDER.BOT,
-        loading: false,
       };
 
       // Remove autocompletion loading message and add error message
-      setMessages([
-        ...messages.filter((msg) => msg.id !== loadingAutocompletionMessage.id),
-        errorLoadingAutocompletionMessage,
-      ]);
+      dispatch(addNewMessage(errorLoadingAutocompletionMessage))
+    }
+    finally {
+      dispatch(setLoadingNewMessage(false))
     }
   };
 
   return (
-    <View
-      className={[
-        "flex flex-row mx-2 mb-2 p-2 ring border-2  border-black  rounded-md ",
-        props.className ?? "",
-      ].join(" ")}
-    >
+    <View style={styles.container} >
       <TextInput
         placeholder="Ask me anything"
         value={prompt}
         onChangeText={(newText) => dispatch(setPromptText(newText))}
-        className="flex-1 text-xl text-[Nunito]"
+        style={styles.promptInput}
         onSubmitEditing={handlePromptSubmission}
       />
       <TouchableWithoutFeedback onPress={handlePromptSubmission}>
-        <View className={"cursor-pointer ml-2"}>
+        <View style={styles.sendIconWrapper}>
           <FeatherIcon name="send" size={30} color="#000" />
         </View>
       </TouchableWithoutFeedback>
@@ -101,3 +81,23 @@ const PromptSubmitForm = (props) => {
 };
 
 export default PromptSubmitForm;
+
+const styles = StyleSheet.create({
+  container: {
+    display: "flex",
+    flexDirection: "row",
+    marginVertical: 2,
+    marginBottom: 2,
+    padding: 2,
+    border: "2px solid black",
+    borderRadius: 4
+  },
+  promptInput: {
+    flex: 1,
+    fontSize: 4,
+    fontFamily: "Nunito"
+  },
+  sendIconWrapper: {
+    marginLeft: 2
+  }
+})

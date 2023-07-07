@@ -15,7 +15,7 @@ const customFonts = {
   Nunito: require("./assets/fonts/Nunito.ttf"),
 };
 
-const SERVER_URL = "https://chat-buddy-express-api-7cnof6acma-el.a.run.app";
+// const SERVER_URL = "https://chat-buddy-express-api-7cnof6acma-el.a.run.app";
 
 export default function App() {
   const [areFontsLoading] = useFonts(customFonts);
