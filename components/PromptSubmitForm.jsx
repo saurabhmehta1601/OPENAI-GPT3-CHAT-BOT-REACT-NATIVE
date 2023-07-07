@@ -6,6 +6,7 @@ import { setPromptText } from "../redux/features/promptSlice";
 import axios from "axios";
 import generateRandomID from "../utils/getRadomID";
 import { sender } from "../constants";
+import { setLoadingNewMessage } from "../redux/features/messagesSlice";
 
 const PromptSubmitForm = (props) => {
   const prompt = useSelector((state) => state.prompt.text);
@@ -17,6 +18,8 @@ const PromptSubmitForm = (props) => {
   const handlePromptSubmission = async () => {
     if (prompt.trim() === "") return;
 
+    dispatch(setLoadingNewMessage(true));
+
     // Add the user entered prompt to the messages
     const userPromptMessage = {
       id: generateRandomID(),
@@ -26,7 +29,7 @@ const PromptSubmitForm = (props) => {
     };
     setMessages([...messages, userPromptMessage]);
 
-    setPrompt("");
+    dispatch(setPromptText(""));
 
     // Add a message to show autocompletion loading by bot
     const loadingAutocompletionMessage = {
@@ -34,6 +37,7 @@ const PromptSubmitForm = (props) => {
       loading: true,
       sender: sender.BOT,
     };
+
     setMessages([...messages, loadingAutocompletionMessage]);
 
     // Send the prompt to the server and get the response and add it to the messages
