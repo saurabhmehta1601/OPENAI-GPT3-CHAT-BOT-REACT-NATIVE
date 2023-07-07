@@ -1,19 +1,32 @@
 import { createSlice } from "@reduxjs/toolkit";
+import generateRandomID from "../../utils/getRadomID";
+import { sender } from "../../constants";
+
+const greetingMessage = {
+  id: generateRandomID(),
+  text: "Hello, How can I help you?",
+  sender: sender.BOT,
+  loading: false,
+};
 
 const initialState = {
-  messages: [],
+  allMessages: [greetingMessage],
+  loadingNewMessage: false,
 };
 
 export const messagesSlice = createSlice({
   name: "messages",
   initialState,
   reducers: {
-    addMessage: (state, action) => {
-      state.messages.push(action.payload);
+    addNewMessage: (state, action) => {
+      state.allMessages.push(action.payload);
+    },
+    setLoadingNewMessage: (state, action) => {
+      state.loadingNewMessage = action.payload;
     },
   },
 });
 
-export const { addMessage } = messagesSlice.actions;
+export const { addNewMessage, setLoadingNewMessage } = messagesSlice.actions;
 
 export default messagesSlice.reducer;

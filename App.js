@@ -11,6 +11,7 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { store } from "./redux/store";
 import { Provider } from "react-redux";
+import ChatMessageSection from "./components/ChatMessageSection";
 
 
 SplashScreen.preventAutoHideAsync();
@@ -33,8 +34,6 @@ export default function App() {
 
   const [messages, setMessages] = useState([greetingMessage]);
 
-  console.log({ messages });
-
   const [areFontsLoading] = useFonts(customFonts);
   const onLayoutRootView = useCallback(async () => {
     if (areFontsLoading) {
@@ -54,8 +53,10 @@ export default function App() {
         style={styles.container}
         onLayout={onLayoutRootView}
       >
+
         <Header />
-        <FlatList
+        <ChatMessageSection />
+        {/* <FlatList
           data={messages}
           renderItem={({ item }) => (
             <View className={"my-1"}>
@@ -67,7 +68,7 @@ export default function App() {
             </View>
           )}
           keyExtractor={(item) => item.id}
-        />
+        /> */}
 
         <View className="mt-auto">
           <PromptSubmitForm />

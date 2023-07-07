@@ -1,9 +1,11 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Message from "./Message";
 import { FlatList, View } from "react-native";
+import { useSelector } from "react-redux";
 
-const ChatMessageSection = ({ messages }) => {
+const ChatMessageSection = () => {
+  const messages = useSelector((state) => state.messages.allMessages);
+
   return (
     <FlatList
       data={messages}
@@ -22,7 +24,3 @@ const ChatMessageSection = ({ messages }) => {
 };
 
 export default ChatMessageSection;
-
-ChatMessageSection.prototype = {
-  messages: PropTypes.array.isRequired,
-};
