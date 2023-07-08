@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     fontFamily: "Nunito"
   },
   sendIconWrapper: {
-    paddingVertical: 8,
+    paddingVertical: 10,
     paddingHorizontal: 16,
     backgroundColor: "#19cfc6",
     borderTopEndRadius: 4,
