@@ -8,9 +8,10 @@ import { MESSAGE_SENDER } from "../constants";
 import { addNewMessage, setLoadingNewMessage } from "../redux/features/messagesSlice";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 
+const SERVER_URL = "https://chat-buddy-express-api-7cnof6acma-el.a.run.app"
+
 const PromptSubmitForm = () => {
   const prompt = useAppSelector((state) => state.prompt.text);
-  const messages = useAppSelector(state => state.messages.allMessages)
   const dispatch = useAppDispatch();
 
   const handlePromptSubmission = async () => {
@@ -31,10 +32,9 @@ const PromptSubmitForm = () => {
 
     // Add a message to show autocompletion loading by bot
     dispatch(setLoadingNewMessage(true))
-
     // Send the prompt to the server and get the response and add it to the messages
     try {
-      const response = await axios.post(`${process.env.EXPO_PUBLIC_SERVER_URL}/autocomplete`, {
+      const response = await axios.post(`${SERVER_URL}/autocomplete`, {
         prompt,
       });
       const { id, text } = response.data;
@@ -103,6 +103,6 @@ const styles = StyleSheet.create({
   sendIconWrapper: {
     paddingVertical: 8,
     paddingHorizontal: 12,
-    backgroundColor:"black"
+    backgroundColor: "#1ccf19"
   }
 })
