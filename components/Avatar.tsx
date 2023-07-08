@@ -20,5 +20,9 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     borderRadius: 4,
     padding: 8,
+    width: 50,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
   }
 })

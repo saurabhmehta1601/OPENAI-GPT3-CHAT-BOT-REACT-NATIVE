@@ -1,26 +1,22 @@
 import React from "react";
-import { FlatList, View, StyleSheet } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import TextMessage from "./Message/TextMessage";
 import { useAppSelector } from "../hooks/redux";
 import LoadingBotMessageSkeleton from "./Message/LoadingBotMessageSkeleton";
-import { ITextMessage } from "../interfaces/Message";
 
 const ChatMessageSection = () => {
   const messages = useAppSelector((state) => state.messages.allMessages);
   const isNewMessageLoading = useAppSelector(state => state.messages.loadingNewMessage)
+  console.log({ line: 11, totalMesssage: messages.length, messages })
 
   return (
-    <View style={styles.wrapper}>
-      <FlatList
-        data={messages}
-        renderItem={({ item }: { item: ITextMessage }) => <View style={styles.messageContainer}>
-          <TextMessage message={item} />
-        </View>
-        }
-        keyExtractor={(item) => item.id}
-      />
-      {isNewMessageLoading && <LoadingBotMessageSkeleton />}
-    </View>
+    <ScrollView>
+      {messages.map(message => <View style={styles.messageContainer}>
+        <TextMessage key={message.id} message={message} />
+      </View>
+      )}
+      {isNewMessageLoading && <View style={{ marginVertical: 8 }} ><LoadingBotMessageSkeleton /></View>}
+    </ScrollView>
   );
 };
 
@@ -29,6 +25,7 @@ export default ChatMessageSection;
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
+    backgroundColor: "purple"
   },
   messageContainer: {
     marginVertical: 2

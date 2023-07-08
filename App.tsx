@@ -8,6 +8,8 @@ import * as SplashScreen from "expo-splash-screen";
 import { store } from "./redux/store";
 import { Provider } from "react-redux";
 import ChatMessageSection from "./components/ChatMessageSection";
+import TextMessage from "./components/Message/TextMessage";
+import { MESSAGE_SENDER } from "./constants";
 
 SplashScreen.preventAutoHideAsync();
 

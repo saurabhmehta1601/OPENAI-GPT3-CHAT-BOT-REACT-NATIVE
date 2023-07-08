@@ -42,11 +42,11 @@ const TextMessage = ({ message }: IProps) => {
         <Avatar IconPack={Ionicons} name="person" />
       )}
       {/* Text Message */}
-      <View style={styles.message}>
-        {message.text && (message.sender === MESSAGE_SENDER.BOT ?
+      <View style={[styles.message, message.sender === MESSAGE_SENDER.USER ? styles.userTextWrapper : undefined]}>
+        {message.sender === MESSAGE_SENDER.BOT ?
           <Text style={styles.text}> {renderedText} </Text>
-          : <FormattedTextWithPreLines textStyles={styles.text} text={message.text} />
-        )}
+          : <FormattedTextWithPreLines textStyles={[styles.text, styles.userText]} text={message.text} />
+        }
       </View>
     </View>
   );

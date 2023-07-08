@@ -14,7 +14,9 @@ export const styles = StyleSheet.create({
   message: {
     flex: 1,
     display: "flex",
-    justifyContent:"center",
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 4,
     backgroundColor: "#eee",
     borderRadius: 4,
     height: "100%",
@@ -28,5 +30,12 @@ export const styles = StyleSheet.create({
   activityIndicatorWrapper: {
     borderRadius: 4,
     padding: 2,
+  },
+  userTextWrapper: {
+    backgroundColor: "#096ced",
+  },
+  userText: {
+    color: "white",
+    fontWeight: "700"
   },
 });
