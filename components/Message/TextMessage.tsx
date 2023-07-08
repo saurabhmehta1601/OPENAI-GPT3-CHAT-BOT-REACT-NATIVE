@@ -42,12 +42,12 @@ const TextMessage = ({ message }: IProps) => {
       )}
       {/* Text Message */}
       <View style={styles.message}>
-        <Text style={styles.text}>
-          {message.text &&
-            (message.sender === MESSAGE_SENDER.BOT
-              ? renderedText
-              : <FormattedTextWithPreLines text={message.text} />)}
-        </Text>
+
+        {message.text &&
+          (message.sender === MESSAGE_SENDER.BOT
+            ? <Text style={styles.text}> {renderedText} </Text>
+            : <FormattedTextWithPreLines text={message.text} />)}
+
       </View>
     </View>
   );
