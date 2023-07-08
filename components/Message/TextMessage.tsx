@@ -5,8 +5,8 @@ import { MESSAGE_SENDER } from "../../constants";
 import Avatar from "../Avatar";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import Ionicons from "react-native-vector-icons/Ionicons"
-import formatTextWithPreLine from "../../utils/formatTextWithPreLines";
-import { styles } from "./styles";
+import FormattedTextWithPreLines from "../FormatedTextWithPreLines";
+import { styles } from "./styles"
 
 interface IProps {
   message: {
@@ -46,7 +46,7 @@ const TextMessage = ({ message }: IProps) => {
           {message.text &&
             (message.sender === MESSAGE_SENDER.BOT
               ? renderedText
-              : formatTextWithPreLine(message.text))}
+              : <FormattedTextWithPreLines text={message.text} />)}
         </Text>
       </View>
     </View>
