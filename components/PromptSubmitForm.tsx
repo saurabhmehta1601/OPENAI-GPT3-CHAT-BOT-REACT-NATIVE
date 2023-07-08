@@ -8,7 +8,7 @@ import { MESSAGE_SENDER } from "../constants";
 import { addNewMessage, setLoadingNewMessage } from "../redux/features/messagesSlice";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 
-const PromptSubmitForm = (props) => {
+const PromptSubmitForm = () => {
   const prompt = useAppSelector((state) => state.prompt.text);
   const messages = useAppSelector(state => state.messages.allMessages)
   const dispatch = useAppDispatch();
@@ -73,7 +73,7 @@ const PromptSubmitForm = (props) => {
       />
       <TouchableWithoutFeedback onPress={handlePromptSubmission}>
         <View style={styles.sendIconWrapper}>
-          <FeatherIcon name="send" size={30} color="#000" />
+          <FeatherIcon name="send" size={25} color="#fff" />
         </View>
       </TouchableWithoutFeedback>
     </View>
@@ -87,17 +87,22 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     marginVertical: 2,
+    marginHorizontal: 8,
     marginBottom: 2,
-    padding: 2,
-    border: "2px solid black",
+    borderColor: "black",
+    borderWidth: 2,
     borderRadius: 4
   },
   promptInput: {
     flex: 1,
-    fontSize: 4,
+    fontWeight: "700",
+    backgroundColor: "#eee",
+    paddingLeft: 12,
     fontFamily: "Nunito"
   },
   sendIconWrapper: {
-    marginLeft: 2
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    backgroundColor:"black"
   }
 })

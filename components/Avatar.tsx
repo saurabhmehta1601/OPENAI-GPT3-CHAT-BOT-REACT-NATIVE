@@ -19,6 +19,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "black",
     borderRadius: 4,
-    padding: 2
+    padding: 8,
   }
 })

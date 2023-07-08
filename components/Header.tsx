@@ -2,16 +2,13 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { View, Text, StyleSheet, TouchableOpacity, Linking } from "react-native";
 import React from "react";
 
-interface IProps {
-
-}
-const Header = (props: IProps) => {
+const Header = () => {
   const openGithubRepository = () => {
     Linking.openURL("https://github.com/saurabhmehta1601/OPENAI-GPT3-CHAT-BOT");
   };
 
   return (
-    <View style={styles.container} {...props}>
+    <View style={styles.container}>
       <Text style={styles.logoText}>
         AI BUDDY
       </Text>
@@ -24,17 +21,18 @@ const Header = (props: IProps) => {
 
 export default Header;
 
-
 const styles = StyleSheet.create({
   container: {
     padding: 4,
+    paddingHorizontal: 12,
     display: "flex",
     flexDirection: "row",
-    alignContent: "space-between",
+    justifyContent: "space-between",
     alignItems: "center"
   },
   logoText: {
-    fontSize: 12,
+    fontSize: 24,
+    fontWeight: "bold",
     fontFamily: "Nunito",
     color: "black",
   }
