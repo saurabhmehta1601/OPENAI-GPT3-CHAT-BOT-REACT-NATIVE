@@ -39,7 +39,11 @@ const TextMessage = ({ message }: IProps) => {
       {message.sender === MESSAGE_SENDER.BOT ? (
         <Avatar IconPack={FontAwesome5} name="robot" />
       ) : (
-        <Avatar IconPack={Ionicons} name="person" />
+        <Avatar
+          IconPack={Ionicons} name="person"
+          color="white"
+          wrapperStyles={{ backgroundColor: "#096ced" }}
+        />
       )}
       {/* Text Message */}
       <View style={[styles.message, message.sender === MESSAGE_SENDER.USER ? styles.userTextWrapper : undefined]}>

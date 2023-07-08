@@ -86,23 +86,24 @@ const styles = StyleSheet.create({
   container: {
     display: "flex",
     flexDirection: "row",
-    marginVertical: 2,
-    marginHorizontal: 8,
+    marginVertical: 16,
+    marginHorizontal: 16,
     marginBottom: 2,
-    borderColor: "black",
-    borderWidth: 2,
-    borderRadius: 4
   },
   promptInput: {
     flex: 1,
+    borderTopLeftRadius: 4,
+    borderBottomLeftRadius: 4,
     fontWeight: "700",
-    backgroundColor: "#eee",
+    backgroundColor: "#ececec",
     paddingLeft: 12,
     fontFamily: "Nunito"
   },
   sendIconWrapper: {
     paddingVertical: 8,
     paddingHorizontal: 12,
-    backgroundColor: "#1ccf19"
+    backgroundColor: "#1ccf19",
+    borderTopEndRadius: 4,
+    borderBottomEndRadius: 4,
   }
 })
