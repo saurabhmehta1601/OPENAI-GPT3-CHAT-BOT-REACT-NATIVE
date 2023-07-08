@@ -101,8 +101,8 @@ const styles = StyleSheet.create({
   },
   sendIconWrapper: {
     paddingVertical: 8,
-    paddingHorizontal: 12,
-    backgroundColor: "#1ccf19",
+    paddingHorizontal: 16,
+    backgroundColor: "#19cfc6",
     borderTopEndRadius: 4,
     borderBottomEndRadius: 4,
   }

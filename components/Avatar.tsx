@@ -18,7 +18,7 @@ export default function Avatar({ IconPack, name, size = 25, color = "#fff", wrap
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "black",
+    backgroundColor: "#333",
     borderRadius: 4,
     padding: 8,
     width: 50,
