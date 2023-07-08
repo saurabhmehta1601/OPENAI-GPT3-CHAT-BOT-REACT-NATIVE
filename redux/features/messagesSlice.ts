@@ -1,17 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 import generateRandomID from "../../utils/getRadomID";
-import { MESSAGE_TYPE, MESSAGE_SENDER} from "../../constants";
+import {  MESSAGE_SENDER } from "../../constants";
+import { ITextMessage } from "../../interfaces/Message";
+
+interface IInitialState {
+  allMessages: ITextMessage[];
+  loadingNewMessage: boolean;
+}
 
 const greetingMessage = {
   id: generateRandomID(),
   text: "Hello, How can I help you?",
   sender: MESSAGE_SENDER.BOT,
-  type: MESSAGE_TYPE.TEXT,
 };
 
-const initialState = {
+const initialState: IInitialState = {
   allMessages: [greetingMessage],
-  loadingNewMessage: false,
+  loadingNewMessage: true,
 };
 
 export const messagesSlice = createSlice({

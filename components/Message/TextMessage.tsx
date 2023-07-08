@@ -10,8 +10,9 @@ import { styles } from "./styles"
 
 interface IProps {
   message: {
-    sender: MESSAGE_SENDER,
+    id?: string
     text: string
+    sender: MESSAGE_SENDER,
   }
 }
 const TextMessage = ({ message }: IProps) => {
@@ -42,12 +43,10 @@ const TextMessage = ({ message }: IProps) => {
       )}
       {/* Text Message */}
       <View style={styles.message}>
-
-        {message.text &&
-          (message.sender === MESSAGE_SENDER.BOT
-            ? <Text style={styles.text}> {renderedText} </Text>
-            : <FormattedTextWithPreLines text={message.text} />)}
-
+        {message.text && (message.sender === MESSAGE_SENDER.BOT ?
+          <Text style={styles.text}> {renderedText} </Text>
+          : <FormattedTextWithPreLines textStyles={styles.text} text={message.text} />
+        )}
       </View>
     </View>
   );
